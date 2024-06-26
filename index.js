@@ -6,6 +6,7 @@
   const refreshButtonIcon = document.querySelector(".refresh-button i");
 
   function getImg() {
+    refreshButton.disabled = true;
     refreshButtonIcon.classList.add("fa-spin");
 
     fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=cats`, {
@@ -19,6 +20,7 @@
       })
       .finally(function () {
         refreshButtonIcon.classList.remove("fa-spin");
+        refreshButton.disabled = false;
       });
   }
 
