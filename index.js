@@ -1,16 +1,34 @@
 (() => {
   API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
 
+  let searchOffset = -1; // used internally by the API_URL.search method
+  API_URL = {
+    translate: (query) =>
+      `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=${query}`,
+    random: (query) =>
+      `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=${query}`,
+    search: (query) => {
+      searchOffset = (searchOffset + 1) % 5000;
+      return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=1&offset=${searchOffset}`;
+    },
+  };
+
   const img = document.querySelector("img");
   const refreshButton = document.querySelector(".refresh-button");
   const refreshButtonIcon = document.querySelector(".refresh-button i");
   const errorMsg = document.querySelector(".error-msg");
 
-  function getImg() {
+  const defaultQuery = "cats";
+  const defaultApi = "translate";
+  let currentQuery = defaultQuery;
+  let currentApi = defaultApi;
+
+  function getImg(query = currentQuery, api = currentApi) {
+    console.log(api, query);
     refreshButton.disabled = true;
     refreshButtonIcon.classList.add("fa-spin");
 
-    fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=cats`, {
+    fetch(API_URL[api](query), {
       mode: "cors",
     })
       .then(function (response) {
@@ -18,8 +36,14 @@
       })
       .then(function (response) {
         if (response.meta.status === 200) {
+          let gifUrl;
+          if (Array.isArray(response.data)) {
+            gifUrl = response.data[0].images.original.url;
+          } else {
+            gifUrl = response.data.images.original.url;
+          }
           errorMsg.textContent = "";
-          return setImgSrc(response.data.images.original.url); // returns a Promise
+          return setImgSrc(gifUrl); // returns a Promise
         } else {
           throw new Error(
             `Error ${response.meta.status}. ${response.meta.msg}`
@@ -46,5 +70,5 @@
   }
 
   getImg();
-  refreshButton.addEventListener("click", getImg);
+  refreshButton.addEventListener("click", () => getImg());
 })();
