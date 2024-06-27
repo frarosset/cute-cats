@@ -19,7 +19,7 @@
   const errorMsg = document.querySelector(".error-msg");
 
   const defaultQuery = "cats";
-  const defaultApi = "translate";
+  const defaultApi = "search";
   let currentQuery = defaultQuery;
   let currentApi = defaultApi;
 
@@ -37,8 +37,13 @@
       .then(function (response) {
         if (response.meta.status === 200) {
           let gifUrl;
+          console.log(response.data, response.data.length);
           if (Array.isArray(response.data)) {
-            gifUrl = response.data[0].images.original.url;
+            if (response.data.length) {
+              gifUrl = response.data[0].images.original.url;
+            } else {
+              throw new Error(`No match for '${query}' found!`);
+            }
           } else {
             gifUrl = response.data.images.original.url;
           }
