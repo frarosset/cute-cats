@@ -18,7 +18,7 @@
   const refreshButtonIcon = document.querySelector(".refresh-button i");
   const errorMsg = document.querySelector(".error-msg");
 
-  const defaultQuery = "cats";
+  const defaultQuery = "catsgerger";
   const defaultApi = "search";
   let currentQuery = defaultQuery;
   let currentApi = defaultApi;
@@ -28,16 +28,13 @@
     refreshButton.disabled = true;
     refreshButtonIcon.classList.add("fa-spin");
 
-    fetch(API_URL[api](query), {
-      mode: "cors",
-    })
+    fetch(API_URL[api](query), { mode: "cors" })
       .then(function (response) {
         return response.json(); // returns a Promise
       })
       .then(function (response) {
         if (response.meta.status === 200) {
           let gifUrl;
-          console.log(response.data, response.data.length);
           if (Array.isArray(response.data)) {
             if (response.data.length) {
               gifUrl = response.data[0].images.original.url;
@@ -57,6 +54,7 @@
       })
       .catch(function (error) {
         errorMsg.textContent = error;
+        return setImgSrc("./error.jpg");
       })
       .finally(function () {
         refreshButtonIcon.classList.remove("fa-spin");
