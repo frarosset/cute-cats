@@ -16,6 +16,8 @@
   const img = document.querySelector("img");
   const refreshButton = document.querySelector(".refresh-button");
   const refreshButtonIcon = document.querySelector(".refresh-button i");
+  const searchInput = document.querySelector(".search-input");
+
   const errorMsg = document.querySelector(".error-msg");
   const apiEndpoints = [];
 
@@ -75,6 +77,11 @@
     });
   }
 
+  function setQuery(query) {
+    currentQuery = query;
+    getImg();
+  }
+
   function setApiEndpoint(apiEndpoint) {
     currentApiEndpoint = apiEndpoint;
     getImg();
@@ -104,4 +111,5 @@
   initApiEndpointSelection();
   getImg();
   refreshButton.addEventListener("click", () => getImg());
+  searchInput.addEventListener("change", () => setQuery(searchInput.value));
 })();
