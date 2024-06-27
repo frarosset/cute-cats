@@ -1,17 +1,28 @@
 :root {
   --black: rgb(2, 2, 2);
+  --dark-grey: rgb(24, 24, 24);
   --white: rgb(255, 255, 255);
   --grey: rgb(139, 137, 130);
   --accent: rgb(251, 176, 23);
 
-  --bg-color: var(--black);
+  --bg-color: var(--dark-grey);
   --color: var(--white);
   --secondary-color: var(--grey);
+  --img-bg-color: var(--black);
 
   --main-font: Arial;
   --main-fontsize: 16px;
   --main-lineheight: 1;
   --main-margin: 3vmin;
+
+  --controls-bottom: 10vmin;
+  --controls-lr-padding: 10vmin;
+
+  --button-border-size: 2px;
+  --button-bg-color: rgb(0, 0, 0, 40%);
+
+  --icon-fontsize: 4vmin;
+  --icon-padding: 2vmin;
 
   --footer-padding: 2rem; /* top, left, bottom only */
   --footer-gap: 3rem;
@@ -48,6 +59,7 @@ html {
 
 main,
 /* body, */
+.controls,
 .api-endpoints-div,
 .api-endpoints-span,
 footer {
@@ -75,7 +87,7 @@ main {
 }
 
 img {
-  background-color: red;
+  background-color: var(--img-bg-color);
   border: none;
   display: block;
   flex: 1;
@@ -93,8 +105,51 @@ img {
 }
 
 /*CONTROLS*/
+
+.controls {
+  bottom: var(--controls-bottom);
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 var(--controls-lr-padding);
+  position: absolute;
+  width: 100%;
+}
+
+.refresh-button,
+.search-button {
+  --icon-size: calc(var(--icon-fontsize) + 2 * var(--icon-padding));
+  background-color: var(--button-bg-color);
+  border: var(--button-border-size) solid var(--accent);
+  border-radius: 50%;
+  font-size: var(--icon-fontsize);
+  height: var(--icon-size);
+  width: var(--icon-size);
+}
+
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .search-input.hidden {
   display: none;
+}
+
+.search-button:has(+ input:not(.hidden)) {
+  background-color: var(--accent);
+}
+
+.refresh-button:disabled {
+  background-color: var(--accent);
+}
+
+/* when hover is supported */
+@media not all and (hover: none) {
+  .refresh-button:hover,
+  .search-button:hover {
+    background-color: var(--accent);
+  }
 }
 
 /* FOOTER */
@@ -131,15 +186,8 @@ footer {
   font-size: var(--api-endpoint-fontsize);
 }
 
-/* when hover is supported */
-@media not all and (hover: none) {
-  .api-endpoints-span > label:hover {
-    color: var(--main-color);
-  }
-}
-
 .api-endpoints-span > label:has(> input:checked) {
-  color: var(--main-color);
+  color: var(--color);
   text-decoration: underline var(--secondary-color);
 }
 
@@ -156,4 +204,12 @@ footer {
 .attribution a {
   font-weight: bold;
   text-decoration: none;
+}
+
+/* when hover is supported */
+@media not all and (hover: none) {
+  .attribution a:hover,
+  .api-endpoints-span > label:hover {
+    color: var(--color);
+  }
 }
