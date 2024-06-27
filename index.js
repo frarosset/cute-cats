@@ -1,6 +1,6 @@
 (() => {
   API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
-  API_KEY = "greger";
+
   let searchOffset = -1; // used internally by the API_URL.search method
   API_URL = {
     translate: (query) =>
@@ -76,8 +76,13 @@
     });
   }
 
-  function setQuery(query) {
-    currentQuery = query;
+  function setQueryFromSearchInput() {
+    let query = searchInput.value;
+    if (query) {
+      currentQuery = query;
+    } else {
+      currentQuery = defaultQuery;
+    }
     getImg();
   }
 
@@ -108,14 +113,23 @@
   }
 
   function toggleSearchInputHiddenClass(force = undefined) {
-    searchInput.classList.toggle("hidden", force);
+    const state = searchInput.classList.toggle("hidden", force);
+    if (!state) {
+      /* it has become visible */
+      searchInput.focus();
+    }
   }
 
+  function initSearchInput() {
+    searchInput.placeholder = defaultQuery;
+  }
+
+  initSearchInput();
   toggleSearchInputHiddenClass(true);
 
   refreshButton.addEventListener("click", () => getImg());
   searchButton.addEventListener("click", () => toggleSearchInputHiddenClass());
-  searchInput.addEventListener("change", () => setQuery(searchInput.value));
+  searchInput.addEventListener("change", () => setQueryFromSearchInput());
 
   initApiEndpointSelection();
   getImg();

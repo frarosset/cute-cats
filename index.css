@@ -23,12 +23,13 @@
   --controls-lr-padding: 10vmin;
 
   --button-border-size: 2px;
-  --button-bg-color: rgb(0, 0, 0, 40%);
+  --button-bg-color: rgb(0, 0, 0, 50%);
 
   --icon-fontsize: 4vmin;
   --icon-padding: 2vmin;
 
   --search-div-lr-padding: 0.5em;
+  --search-cancel-button-size: 1em;
 
   --footer-padding: 2rem; /* top, left, bottom only */
   --footer-gap: 3rem;
@@ -100,7 +101,7 @@ img {
   border: none;
   display: block;
   flex: 1;
-  min-height: 1;
+  min-height: 0;
   object-fit: scale-down;
   overflow: hidden;
   width: 100%;
@@ -143,10 +144,6 @@ img {
   justify-content: center;
 }
 
-.search-input.hidden {
-  display: none;
-}
-
 .search-button:has(+ input:not(.hidden)) {
   background-color: var(--accent);
 }
@@ -170,13 +167,31 @@ img {
   outline-offset: calc(-1 * var(--search-div-border-size));
 }
 
-.search-div input {
+.search-input {
   background-color: transparent;
   border: none;
   caret-color: var(--accent);
   font-size: var(--icon-fontsize);
   outline: none;
   padding: 0 var(--search-div-lr-padding);
+}
+
+.search-input.hidden {
+  display: none;
+}
+
+.search-input::placeholder {
+  color: var(--secondary-color);
+}
+
+/* See https://stackoverflow.com/questions/22928819/override-the-webkit-search-cancel-button */
+.search-input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  background-color: var(--accent);
+  cursor: pointer;
+  height: var(--search-cancel-button-size);
+  width: var(--search-cancel-button-size);
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="31.92 95.93 320.15 320.15"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>');
 }
 
 /* when hover is supported */
