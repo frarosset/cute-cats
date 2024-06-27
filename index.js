@@ -4,6 +4,7 @@
   const img = document.querySelector("img");
   const refreshButton = document.querySelector(".refresh-button");
   const refreshButtonIcon = document.querySelector(".refresh-button i");
+  const errorMsg = document.querySelector(".error-msg");
 
   function getImg() {
     refreshButton.disabled = true;
@@ -16,7 +17,17 @@
         return response.json(); // returns a Promise
       })
       .then(function (response) {
-        return setImgSrc(response.data.images.original.url); // returns a Promise
+        if (response.meta.status === 200) {
+          errorMsg.textContent = "";
+          return setImgSrc(response.data.images.original.url); // returns a Promise
+        } else {
+          throw new Error(
+            `Error ${response.meta.status}. ${response.meta.msg}`
+          );
+        }
+      })
+      .catch(function (error) {
+        errorMsg.textContent = error;
       })
       .finally(function () {
         refreshButtonIcon.classList.remove("fa-spin");
