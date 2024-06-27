@@ -1,18 +1,27 @@
 :root {
   --black: rgb(2, 2, 2);
   --white: rgb(255, 255, 255);
+  --grey: rgb(139, 137, 130);
   --accent: rgb(251, 176, 23);
 
   --bg-color: var(--black);
   --color: var(--white);
+  --secondary-color: var(--grey);
 
   --main-font: Arial;
   --main-fontsize: 16px;
   --main-lineheight: 1;
-
   --main-margin: 3vmin;
 
-  --attribution-fontsize: 0.5rem;
+  --footer-padding: 2rem; /* top, left, bottom only */
+  --footer-gap: 3rem;
+
+  --api-endpoints-div-fontsize: 0.8rem;
+  --api-endpoints-div-gap: 0.3rem;
+  --api-endpoints-span-gap: 1rem;
+  --api-endpoint-fontsize: 1rem;
+
+  --attribution-fontsize: 0.6rem;
 }
 
 html {
@@ -38,7 +47,10 @@ html {
 }
 
 main,
-body {
+/* body, */
+.api-endpoints-div,
+.api-endpoints-span,
+footer {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -54,8 +66,10 @@ body {
 }
 
 main {
-  flex: 1;
-  height: 100%;
+  /* flex: 1; */
+  /* height: 100%; */
+  height: 100vh;
+  height: 100dvh;
   min-height: 0;
   width: 100%;
 }
@@ -76,4 +90,65 @@ img {
   text-align: center;
   top: var(--main-margin);
   width: 100%;
+}
+
+/* FOOTER */
+
+footer {
+  gap: var(--footer-gap);
+  padding: var(--footer-padding) var(--footer-padding) 0;
+}
+
+.api-endpoints-div,
+.attribution {
+  text-align: center;
+  /* text-shadow: 1px 1px 2px var(--black); */
+  width: 100%;
+}
+
+.api-endpoints-div {
+  gap: var(--api-endpoints-div-gap);
+}
+
+.api-endpoints-div > p {
+  font-size: var(---api-endpoints-div-fontsize);
+  font-variant: small-caps;
+  text-transform: lowercase;
+}
+
+.api-endpoints-span {
+  gap: var(--api-endpoints-span-gap);
+  flex-direction: row;
+}
+
+.api-endpoints-span > label {
+  color: var(--secondary-color);
+  font-size: var(--api-endpoint-fontsize);
+}
+
+/* when hover is supported */
+@media not all and (hover: none) {
+  .api-endpoints-span > label:hover {
+    color: var(--main-color);
+  }
+}
+
+.api-endpoints-span > label:has(> input:checked) {
+  color: var(--main-color);
+  text-decoration: underline var(--secondary-color);
+}
+
+.api-endpoints-span input[type="radio"] {
+  appearance: none;
+}
+
+.attribution {
+  color: var(--secondary-color);
+  font-size: var(--attribution-fontsize);
+  padding-bottom: var(--footer-padding);
+}
+
+.attribution a {
+  font-weight: bold;
+  text-decoration: none;
 }
