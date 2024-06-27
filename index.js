@@ -17,18 +17,20 @@
   const refreshButton = document.querySelector(".refresh-button");
   const refreshButtonIcon = document.querySelector(".refresh-button i");
   const errorMsg = document.querySelector(".error-msg");
+  const apiEndpoints = [];
 
-  const defaultQuery = "catsgerger";
-  const defaultApi = "search";
+  const defaultQuery = "cats";
+  const defaultApiEndpoint = "search";
   let currentQuery = defaultQuery;
-  let currentApi = defaultApi;
+  let currentApiEndpoint = defaultApiEndpoint;
 
-  function getImg(query = currentQuery, api = currentApi) {
-    console.log(api, query);
+  function getImg(query = currentQuery, apiEndpoint = currentApiEndpoint) {
+    console.log(apiEndpoint, query);
     refreshButton.disabled = true;
+    apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = true));
     refreshButtonIcon.classList.add("fa-spin");
 
-    fetch(API_URL[api](query), { mode: "cors" })
+    fetch(API_URL[apiEndpoint](query), { mode: "cors" })
       .then(function (response) {
         return response.json(); // returns a Promise
       })
@@ -58,6 +60,7 @@
       })
       .finally(function () {
         refreshButtonIcon.classList.remove("fa-spin");
+        apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = false));
         refreshButton.disabled = false;
       });
   }
@@ -72,6 +75,33 @@
     });
   }
 
+  function setApiEndpoint(apiEndpoint) {
+    currentApiEndpoint = apiEndpoint;
+    getImg();
+  }
+
+  function initApiEndpointSelection() {
+    const apiEndpointsDiv = document.querySelector(".api-endpoints-span");
+
+    Object.keys(API_URL).forEach((apiEndpoint) => {
+      const label = document.createElement("label");
+      const labelTextNode = document.createTextNode(apiEndpoint);
+      const input = document.createElement("input");
+
+      input.type = "radio";
+      input.name = "api-endpoint";
+      input.addEventListener("click", () => setApiEndpoint(apiEndpoint));
+
+      if (apiEndpoint === defaultApiEndpoint) input.checked = true;
+
+      label.append(input, labelTextNode);
+      apiEndpointsDiv.appendChild(label);
+
+      apiEndpoints.push(input);
+    });
+  }
+
+  initApiEndpointSelection();
   getImg();
   refreshButton.addEventListener("click", () => getImg());
 })();
