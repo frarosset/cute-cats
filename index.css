@@ -15,6 +15,10 @@
   --main-lineheight: 1;
   --main-margin: 3vmin;
 
+  --error-msg-color: var(--grey);
+  --error-msg-fontsize: 1rem;
+  --error-msg-shadow: 1px 1px 2px var(--black);
+
   --controls-bottom: 10vmin;
   --controls-lr-padding: 10vmin;
 
@@ -103,8 +107,11 @@ img {
 }
 
 .error-msg {
+  color: var(--error-msg-color);
+  font-size: var(--error-msg-fontsize);
   position: absolute;
   text-align: center;
+  text-shadow: var(--error-msg-shadow);
   top: var(--main-margin);
   width: 100%;
 }

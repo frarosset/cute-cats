@@ -1,6 +1,6 @@
 (() => {
   API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
-
+  API_KEY = "greger";
   let searchOffset = -1; // used internally by the API_URL.search method
   API_URL = {
     translate: (query) =>
@@ -52,9 +52,7 @@
           errorMsg.textContent = "";
           return setImgSrc(gifUrl); // returns a Promise
         } else {
-          throw new Error(
-            `Error ${response.meta.status}. ${response.meta.msg}`
-          );
+          throw new Error(`${response.meta.status}. ${response.meta.msg}`);
         }
       })
       .catch(function (error) {
