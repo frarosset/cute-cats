@@ -24,6 +24,8 @@
   --icon-fontsize: 4vmin;
   --icon-padding: 2vmin;
 
+  --search-div-lr-padding: 0.5em;
+
   --footer-padding: 2rem; /* top, left, bottom only */
   --footer-gap: 3rem;
 
@@ -33,6 +35,9 @@
   --api-endpoint-fontsize: 1rem;
 
   --attribution-fontsize: 0.6rem;
+
+  --icon-size: calc(var(--icon-fontsize) + 2 * var(--icon-padding));
+  --border-radius: calc(var(--icon-size) / 2);
 }
 
 html {
@@ -117,7 +122,6 @@ img {
 
 .refresh-button,
 .search-button {
-  --icon-size: calc(var(--icon-fontsize) + 2 * var(--icon-padding));
   background-color: var(--button-bg-color);
   border: var(--button-border-size) solid var(--accent);
   border-radius: 50%;
@@ -142,6 +146,30 @@ img {
 
 .refresh-button:disabled {
   background-color: var(--accent);
+}
+
+.search-button {
+  /* The background color is applied by .search-div */
+  background-color: transparent;
+  position: relative;
+}
+
+.search-div {
+  --search-div-border-size: 1px;
+  background-color: var(--button-bg-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  outline: var(--search-div-border-size) solid var(--grey);
+  outline-offset: calc(-1 * var(--search-div-border-size));
+}
+
+.search-div input {
+  background-color: transparent;
+  border: none;
+  caret-color: var(--accent);
+  font-size: var(--icon-fontsize);
+  outline: none;
+  padding: 0 var(--search-div-lr-padding);
 }
 
 /* when hover is supported */
