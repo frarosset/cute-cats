@@ -16,6 +16,7 @@
   const img = document.querySelector("img");
   const refreshButton = document.querySelector(".refresh-button");
   const refreshButtonIcon = document.querySelector(".refresh-button i");
+  const searchButton = document.querySelector(".search-button");
   const searchInput = document.querySelector(".search-input");
 
   const errorMsg = document.querySelector(".error-msg");
@@ -108,8 +109,16 @@
     });
   }
 
+  function toggleSearchInputHiddenClass(force = undefined) {
+    searchInput.classList.toggle("hidden", force);
+  }
+
+  toggleSearchInputHiddenClass(true);
+
+  refreshButton.addEventListener("click", () => getImg());
+  searchButton.addEventListener("click", () => toggleSearchInputHiddenClass());
+  searchInput.addEventListener("change", () => setQuery(searchInput.value));
+
   initApiEndpointSelection();
   getImg();
-  refreshButton.addEventListener("click", () => getImg());
-  searchInput.addEventListener("change", () => setQuery(searchInput.value));
 })();

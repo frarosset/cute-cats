@@ -92,6 +92,11 @@ img {
   width: 100%;
 }
 
+/*CONTROLS*/
+.search-input.hidden {
+  display: none;
+}
+
 /* FOOTER */
 
 footer {
