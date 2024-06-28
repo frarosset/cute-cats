@@ -244,6 +244,21 @@ img {
   .search-button:hover {
     background-color: var(--accent);
   }
+
+  .search-div:has(.search-input.hidden):hover {
+    background-color: var(--button-bg-color);
+    outline-color: var(--search-div-outline-color);
+  }
+
+  .search-div:hover .search-input.hidden {
+    display: initial;
+    opacity: 1;
+    transform: scale(1);
+    @starting-style {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
 }
 
 /* FOOTER */
