@@ -56,6 +56,7 @@ import setCreditFooter from "./creditFooter.js";
       })
       .catch(function (error) {
         errorMsg.textContent = error;
+        toggleSearchInputHiddenClass(true);
         return setImgSrc("./error.jpg");
       })
       .finally(function () {
