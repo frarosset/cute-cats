@@ -29,7 +29,8 @@ import setCreditFooter from "./creditFooter.js";
   let currentQuery = defaultQuery;
   let currentApiEndpoint = defaultApiEndpoint;
 
-  function getImg(query = currentQuery, apiEndpoint = currentApiEndpoint) {
+  // This v1 version handle the Promises using .then(), .catch(), .finally()
+  function getImg_v1(query = currentQuery, apiEndpoint = currentApiEndpoint) {
     suspendInputs();
 
     fetch(API_URL[apiEndpoint](query), { mode: "cors" })
@@ -63,6 +64,47 @@ import setCreditFooter from "./creditFooter.js";
         resumeInputs();
       });
   }
+
+  // This v2 version handle the Promises using async/await
+  async function getImg_v2(
+    query = currentQuery,
+    apiEndpoint = currentApiEndpoint
+  ) {
+    suspendInputs();
+
+    try {
+      const fetchResponse = await fetch(API_URL[apiEndpoint](query), {
+        mode: "cors",
+      });
+      const response = await fetchResponse.json(); // returns a Promise
+
+      if (response.meta.status === 200) {
+        let gifUrl;
+        if (Array.isArray(response.data)) {
+          if (response.data.length) {
+            gifUrl = response.data[0].images.original.url;
+          } else {
+            throw new Error(`No match for '${query}' found!`);
+          }
+        } else {
+          gifUrl = response.data.images.original.url;
+        }
+        errorMsg.textContent = "";
+        await setImgSrc(gifUrl); // returns a Promise
+      } else {
+        throw new Error(`${response.meta.status}. ${response.meta.msg}`);
+      }
+    } catch (error) {
+      errorMsg.textContent = error;
+      toggleSearchInputHiddenClass(true);
+      await setImgSrc("./error.jpg");
+    } finally {
+      resumeInputs();
+    }
+  }
+
+  // choose one of the two versions above, just for practising (they are eqivalent)
+  const getImg = getImg_v2;
 
   function suspendInputs() {
     refreshButton.disabled = true;
