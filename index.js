@@ -28,10 +28,7 @@
   let currentApiEndpoint = defaultApiEndpoint;
 
   function getImg(query = currentQuery, apiEndpoint = currentApiEndpoint) {
-    console.log(apiEndpoint, query);
-    refreshButton.disabled = true;
-    apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = true));
-    refreshButtonIcon.classList.add("fa-spin");
+    suspendInputs();
 
     fetch(API_URL[apiEndpoint](query), { mode: "cors" })
       .then(function (response) {
@@ -60,10 +57,22 @@
         return setImgSrc("./error.jpg");
       })
       .finally(function () {
-        refreshButtonIcon.classList.remove("fa-spin");
-        apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = false));
-        refreshButton.disabled = false;
+        resumeInputs();
       });
+  }
+
+  function suspendInputs() {
+    refreshButton.disabled = true;
+    searchInput.disabled = true;
+    apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = true));
+    refreshButtonIcon.classList.add("fa-spin");
+  }
+
+  function resumeInputs() {
+    refreshButtonIcon.classList.remove("fa-spin");
+    apiEndpoints.forEach((apiEndpoint) => (apiEndpoint.disabled = false));
+    searchInput.disabled = false;
+    refreshButton.disabled = false;
   }
 
   function setImgSrc(src) {
