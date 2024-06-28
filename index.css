@@ -39,7 +39,7 @@
   --search-div-outline-color: var(--grey);
 
   --footer-gap: 3rem;
-  --footer-padding: 2rem; /* top, left, bottom only */
+  --footer-padding: 3rem 2rem; /* top, left, bottom only */
 
   --subtitle-font-size: 2rem;
   --subtitle-letter-spacing: 0.5rem;
@@ -76,7 +76,7 @@ html {
   line-height: inherit;
   margin: 0;
   padding: 0;
-  vertical-align: baseline;
+  vertical-align: inherit;
 }
 
 main,
@@ -85,7 +85,7 @@ h1,
 .api-endpoints-div,
 .api-endpoints-span,
 .attribution-div,
-footer {
+.main-footer {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -221,9 +221,9 @@ img {
 
 /* FOOTER */
 
-footer {
+.main-footer {
   gap: var(--footer-gap);
-  padding: var(--footer-padding) var(--footer-padding) 0;
+  padding: var(--footer-padding);
 }
 
 h1 span:first-child {
@@ -282,7 +282,6 @@ h1 span:last-child {
 .attribution {
   color: var(--secondary-color);
   font-size: var(--attribution-fontsize);
-  padding-bottom: var(--footer-padding);
 }
 
 .attribution a {

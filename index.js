@@ -1,8 +1,10 @@
+import setCreditFooter from "./creditFooter.js";
+
 (() => {
-  API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
+  const API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
 
   let searchOffset = -1; // used internally by the API_URL.search method
-  API_URL = {
+  const API_URL = {
     translate: (query) =>
       `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=${query}`,
     random: (query) =>
@@ -142,4 +144,6 @@
 
   initApiEndpointSelection();
   getImg();
+
+  setCreditFooter();
 })();
