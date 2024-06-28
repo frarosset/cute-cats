@@ -5,14 +5,14 @@ import setCreditFooter from "./creditFooter.js";
 
   let searchOffset = -1; // used internally by the API_URL.search method
   const API_URL = {
-    translate: (query) =>
-      `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=${query}`,
     random: (query) =>
       `https://api.giphy.com/v1/gifs/random?api_key=${API_KEY}&tag=${query}`,
     search: (query) => {
       searchOffset = (searchOffset + 1) % 5000;
       return `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=1&offset=${searchOffset}`;
     },
+    translate: (query) =>
+      `https://api.giphy.com/v1/gifs/translate?api_key=${API_KEY}&s=${query}`,
   };
 
   const img = document.querySelector("img");

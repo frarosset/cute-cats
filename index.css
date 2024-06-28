@@ -38,6 +38,8 @@
   --search-cancel-button-size: 1em;
   --search-div-lr-padding: 0.5em;
   --search-div-outline-color: var(--grey);
+  --search-transition-timing-function: ease-in;
+  --search-transition-duration: 0.5s;
 
   --footer-gap: 3rem;
   --footer-padding: 3rem 2rem; /* top, left, bottom only */
@@ -182,6 +184,14 @@ img {
   outline: var(--search-div-border-size) solid var(--search-div-outline-color);
   outline-offset: calc(-1 * var(--search-div-border-size));
   max-width: calc(100% - 1.5 * var(--icon-size));
+  transition-duration: var(--search-transition-duration);
+  transition-property: background-color, outline-color;
+  transition-timing-function: var(--search-transition-timing-function);
+}
+
+.search-div:has(.search-input.hidden) {
+  background-color: transparent;
+  outline-color: transparent;
 }
 
 .search-input {
@@ -189,13 +199,29 @@ img {
   border: none;
   caret-color: var(--accent);
   font-size: var(--icon-fontsize);
+  opacity: 1;
   outline: none;
   max-width: calc(100% - var(--icon-size));
   padding: 0 var(--search-div-lr-padding);
+  transform-origin: left;
+  transform: scale(1);
+  transition-behavior: allow-discrete;
+  transition-delay: 0s, 0s, var(--search-transition-duration);
+  transition-duration: var(--search-transition-duration),
+    var(--search-transition-duration), 0s;
+  transition-property: opacity, transform, display;
+  transition-timing-function: var(--search-transition-timing-function);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 
 .search-input.hidden {
   display: none;
+  opacity: 0;
+  transform: scale(0);
 }
 
 .search-input::placeholder {
