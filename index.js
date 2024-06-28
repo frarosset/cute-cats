@@ -128,6 +128,9 @@ import setCreditFooter from "./creditFooter.js";
     if (!state) {
       /* it has become visible */
       searchInput.focus();
+      document.addEventListener("click", hideSearchInputOnClickOutCallback);
+    } else {
+      document.removeEventListener("click", hideSearchInputOnClickOutCallback);
     }
   }
 
@@ -135,12 +138,36 @@ import setCreditFooter from "./creditFooter.js";
     searchInput.placeholder = defaultQuery;
   }
 
+  // Callbacks
+
+  function refreshButtonClickCallback(e) {
+    e.stopImmediatePropagation();
+    getImg();
+  }
+
+  function searchButtonClickCallback(e) {
+    e.stopImmediatePropagation();
+    toggleSearchInputHiddenClass();
+  }
+
+  function searchInputChangeCallback(e) {
+    setQueryFromSearchInput();
+  }
+
+  function hideSearchInputOnClickOutCallback(e) {
+    if (e.target !== searchInput && !searchInput.classList.contains("hidden")) {
+      toggleSearchInputHiddenClass(true);
+    }
+  }
+
+  // Initialize the page
+
   initSearchInput();
   toggleSearchInputHiddenClass(true);
 
-  refreshButton.addEventListener("click", () => getImg());
-  searchButton.addEventListener("click", () => toggleSearchInputHiddenClass());
-  searchInput.addEventListener("change", () => setQueryFromSearchInput());
+  refreshButton.addEventListener("click", refreshButtonClickCallback);
+  searchButton.addEventListener("click", searchButtonClickCallback);
+  searchInput.addEventListener("change", searchInputChangeCallback);
 
   initApiEndpointSelection();
   getImg();
