@@ -1,19 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@400&display=swap");
+
 :root {
+  --accent: rgb(251, 176, 23);
   --black: rgb(2, 2, 2);
   --dark-grey: rgb(24, 24, 24);
-  --white: rgb(255, 255, 255);
   --grey: rgb(139, 137, 130);
-  --accent: rgb(251, 176, 23);
+  --white: rgb(255, 255, 255);
 
   --bg-color: var(--dark-grey);
   --color: var(--white);
-  --secondary-color: var(--grey);
   --img-bg-color: var(--black);
+  --secondary-color: var(--grey);
 
-  --main-font: Arial;
+  --main-font: "Raleway", sans-serif;
   --main-fontsize: 16px;
   --main-lineheight: 1;
   --main-margin: 3vmin;
+  --title-font: "Playwrite US Trad", monospace;
 
   --error-msg-color: var(--grey);
   --error-msg-fontsize: 1rem;
@@ -22,27 +26,34 @@
   --controls-bottom: 10vmin;
   --controls-lr-padding: 10vmin;
 
-  --button-border-size: 2px;
   --button-bg-color: rgb(0, 0, 0, 50%);
+  --button-border-size: 2px;
 
   --icon-fontsize: 4vmin;
   --icon-padding: 2vmin;
 
-  --search-div-lr-padding: 0.5em;
+  --search-div-border-size: 1px;
   --search-cancel-button-size: 1em;
+  --search-div-lr-padding: 0.5em;
+  --search-div-outline-color: var(--grey);
 
-  --footer-padding: 2rem; /* top, left, bottom only */
   --footer-gap: 3rem;
+  --footer-padding: 2rem; /* top, left, bottom only */
 
+  --subtitle-font-size: 2rem;
+  --subtitle-letter-spacing: 0.5rem;
+  --title-font-size: 3rem;
+
+  --api-endpoint-fontsize: 1rem;
   --api-endpoints-div-fontsize: 0.8rem;
   --api-endpoints-div-gap: 0.3rem;
   --api-endpoints-span-gap: 1rem;
-  --api-endpoint-fontsize: 1rem;
 
+  --attribution-div-gap: 0.6rem;
   --attribution-fontsize: 0.6rem;
 
-  --icon-size: calc(var(--icon-fontsize) + 2 * var(--icon-padding));
   --border-radius: calc(var(--icon-size) / 2);
+  --icon-size: calc(var(--icon-fontsize) + 2 * var(--icon-padding));
 }
 
 html {
@@ -57,9 +68,9 @@ html {
 *,
 *:before,
 *:after {
-  font-family: inherit;
   box-sizing: border-box;
   color: inherit;
+  font-family: inherit;
   font-size: inherit; /* 100% */
   line-height: inherit;
   margin: 0;
@@ -68,10 +79,11 @@ html {
 }
 
 main,
-/* body, */
+h1,
 .controls,
 .api-endpoints-div,
 .api-endpoints-span,
+.attribution-div,
 footer {
   align-items: center;
   display: flex;
@@ -131,16 +143,16 @@ img {
 .refresh-button,
 .search-button {
   background-color: var(--button-bg-color);
-  border: var(--button-border-size) solid var(--accent);
   border-radius: 50%;
+  border: var(--button-border-size) solid var(--accent);
   font-size: var(--icon-fontsize);
   height: var(--icon-size);
   width: var(--icon-size);
 }
 
 .search-button {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
 }
 
@@ -159,11 +171,10 @@ img {
 }
 
 .search-div {
-  --search-div-border-size: 1px;
   background-color: var(--button-bg-color);
   border-radius: var(--border-radius);
   display: flex;
-  outline: var(--search-div-border-size) solid var(--grey);
+  outline: var(--search-div-border-size) solid var(--search-div-outline-color);
   outline-offset: calc(-1 * var(--search-div-border-size));
 }
 
@@ -190,8 +201,8 @@ img {
   background-color: var(--accent);
   cursor: pointer;
   height: var(--search-cancel-button-size);
-  width: var(--search-cancel-button-size);
   mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="31.92 95.93 320.15 320.15"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>');
+  width: var(--search-cancel-button-size);
 }
 
 /* when hover is supported */
@@ -209,10 +220,23 @@ footer {
   padding: var(--footer-padding) var(--footer-padding) 0;
 }
 
+h1 span:first-child {
+  color: var(--accent);
+  font-family: var(--title-font);
+  font-size: var(--title-font-size);
+}
+
+h1 span:last-child {
+  font-size: var(--subtitle-font-size);
+  font-variant: small-caps;
+  letter-spacing: var(--subtitle-letter-spacing);
+  padding-left: var(--subtitle-letter-spacing);
+  width: 100%;
+}
+
 .api-endpoints-div,
 .attribution {
   text-align: center;
-  /* text-shadow: 1px 1px 2px var(--black); */
   width: 100%;
 }
 
@@ -227,8 +251,8 @@ footer {
 }
 
 .api-endpoints-span {
-  gap: var(--api-endpoints-span-gap);
   flex-direction: row;
+  gap: var(--api-endpoints-span-gap);
 }
 
 .api-endpoints-span > label {
@@ -243,6 +267,10 @@ footer {
 
 .api-endpoints-span input[type="radio"] {
   appearance: none;
+}
+
+.attribution-div {
+  gap: var(--attribution-div-gap);
 }
 
 .attribution {
