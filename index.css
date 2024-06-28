@@ -14,7 +14,7 @@
   --secondary-color: var(--grey);
 
   --main-font: "Raleway", sans-serif;
-  --main-fontsize: 16px;
+  --main-fontsize: max(16px, 1vmin);
   --main-lineheight: 1;
   --main-margin: 3vmin;
   --title-font: "Playwrite US Trad", monospace;
@@ -23,14 +23,15 @@
   --error-msg-fontsize: 1rem;
   --error-msg-shadow: 1px 1px 2px var(--black);
 
-  --controls-bottom: 10vmin;
-  --controls-lr-padding: 10vmin;
+  --controls-bottom: 2.5rem;
+  --controls-lr-padding: 2.5rem;
+  --max-width: 1024px;
 
   --button-bg-color: rgb(0, 0, 0, 50%);
   --button-border-size: 2px;
 
-  --icon-fontsize: 4vmin;
-  --icon-padding: 2vmin;
+  --icon-fontsize: 1.8rem;
+  --icon-padding: 1rem;
 
   --search-div-border-size: 1px;
   --search-cancel-button-size: 1em;
@@ -138,6 +139,7 @@ img {
   padding: 0 var(--controls-lr-padding);
   position: absolute;
   width: 100%;
+  max-width: var(--max-width);
 }
 
 .refresh-button,
@@ -148,6 +150,8 @@ img {
   font-size: var(--icon-fontsize);
   height: var(--icon-size);
   width: var(--icon-size);
+  min-height: var(--icon-size);
+  min-width: var(--icon-size);
 }
 
 .search-button {
@@ -176,6 +180,7 @@ img {
   display: flex;
   outline: var(--search-div-border-size) solid var(--search-div-outline-color);
   outline-offset: calc(-1 * var(--search-div-border-size));
+  max-width: calc(100% - 1.5 * var(--icon-size));
 }
 
 .search-input {
@@ -184,6 +189,7 @@ img {
   caret-color: var(--accent);
   font-size: var(--icon-fontsize);
   outline: none;
+  max-width: calc(100% - var(--icon-size));
   padding: 0 var(--search-div-lr-padding);
 }
 
