@@ -2,6 +2,7 @@ import setCreditFooter from "./creditFooter.js";
 
 (() => {
   const API_KEY = "KBszsvWmSCqazUTsnFOXhIwkQDQxMbK3";
+  const GIF_VIEW = ["contain", "cover", "scale-down"];
 
   let searchOffset = -1; // used internally by the API_URL.search method
   const API_URL = {
@@ -26,6 +27,7 @@ import setCreditFooter from "./creditFooter.js";
 
   const defaultQuery = "cats";
   const defaultApiEndpoint = "search";
+  const defaultGifView = "scale-down";
   let currentQuery = defaultQuery;
   let currentApiEndpoint = defaultApiEndpoint;
 
@@ -145,8 +147,27 @@ import setCreditFooter from "./creditFooter.js";
     getImg();
   }
 
+  function initGifViewSelection() {
+    const gifViewSpan = document.querySelector(".gif-view-span");
+
+    GIF_VIEW.forEach((gifView) => {
+      const label = document.createElement("label");
+      const labelTextNode = document.createTextNode(gifView);
+      const input = document.createElement("input");
+
+      input.type = "radio";
+      input.name = "gif-view";
+      input.addEventListener("click", () => (img.style.objectFit = gifView));
+
+      if (gifView === defaultGifView) input.checked = true;
+
+      label.append(input, labelTextNode);
+      gifViewSpan.appendChild(label);
+    });
+  }
+
   function initApiEndpointSelection() {
-    const apiEndpointsDiv = document.querySelector(".api-endpoints-span");
+    const apiEndpointsSpan = document.querySelector(".api-endpoints-span");
 
     Object.keys(API_URL).forEach((apiEndpoint) => {
       const label = document.createElement("label");
@@ -160,7 +181,7 @@ import setCreditFooter from "./creditFooter.js";
       if (apiEndpoint === defaultApiEndpoint) input.checked = true;
 
       label.append(input, labelTextNode);
-      apiEndpointsDiv.appendChild(label);
+      apiEndpointsSpan.appendChild(label);
 
       apiEndpoints.push(input);
     });
@@ -212,6 +233,7 @@ import setCreditFooter from "./creditFooter.js";
   searchButton.addEventListener("click", searchButtonClickCallback);
   searchInput.addEventListener("change", searchInputChangeCallback);
 
+  initGifViewSelection();
   initApiEndpointSelection();
   getImg();
 

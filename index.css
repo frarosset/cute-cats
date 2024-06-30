@@ -48,6 +48,7 @@
   --subtitle-letter-spacing: 0.5rem;
   --title-font-size: 3rem;
 
+  /* The following are also valid for .gif-view-div and .gif-view-span */
   --api-endpoint-fontsize: 1rem;
   --api-endpoints-div-fontsize: 0.8rem;
   --api-endpoints-div-gap: 0.3rem;
@@ -85,7 +86,9 @@ html {
 main,
 h1,
 .controls,
+.gif-view-div,
 .api-endpoints-div,
+.gif-view-span,
 .api-endpoints-span,
 .attribution-div,
 .main-footer {
@@ -173,7 +176,7 @@ img {
 
 .search-button {
   /* The background color is applied by .search-div */
-  background-color: transparent;
+  /* background-color: transparent; */
   position: relative;
 }
 
@@ -282,37 +285,44 @@ h1 span:last-child {
   width: 100%;
 }
 
+.gif-view-div,
 .api-endpoints-div,
 .attribution {
   text-align: center;
   width: 100%;
 }
 
+.gif-view-div,
 .api-endpoints-div {
   gap: var(--api-endpoints-div-gap);
 }
 
+.gif-view-div > p,
 .api-endpoints-div > p {
   font-size: var(---api-endpoints-div-fontsize);
   font-variant: small-caps;
   text-transform: lowercase;
 }
 
+.gif-view-span,
 .api-endpoints-span {
   flex-direction: row;
   gap: var(--api-endpoints-span-gap);
 }
 
+.gif-view-span > label,
 .api-endpoints-span > label {
   color: var(--secondary-color);
   font-size: var(--api-endpoint-fontsize);
 }
 
+.gif-view-span > label:has(> input:checked),
 .api-endpoints-span > label:has(> input:checked) {
   color: var(--color);
   text-decoration: underline var(--secondary-color);
 }
 
+.gif-view-span input[type="radio"],
 .api-endpoints-span input[type="radio"] {
   appearance: none;
 }
@@ -334,6 +344,7 @@ h1 span:last-child {
 /* when hover is supported */
 @media not all and (hover: none) {
   .attribution a:hover,
+  .gif-view-span > label:hover,
   .api-endpoints-span > label:hover {
     color: var(--color);
   }
